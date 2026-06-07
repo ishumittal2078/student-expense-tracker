@@ -15,7 +15,6 @@ def main():
     print("\nTo see the project structure:")
     print("- Check src/models/expense.py for the Expense class")
     print("- Review the README.md for project information")
-    print("\nDevelopment is ongoing following the spec at .kiro/specs/student-expense-tracker/")
 
 
 if __name__ == "__main__":

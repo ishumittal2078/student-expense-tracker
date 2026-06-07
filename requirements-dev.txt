@@ -1,0 +1,10 @@
+# Testing Dependencies
+hypothesis>=6.0.0
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Code Quality
+flake8>=6.0.0
+
+# Optional Data Display
+# pandas>=1.0.0  # Uncomment if you want to use pandas for data display

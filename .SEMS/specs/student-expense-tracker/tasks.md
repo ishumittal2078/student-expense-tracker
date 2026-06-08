@@ -6,7 +6,7 @@ This task list implements a Python-based command-line expense tracking applicati
 
 ## Tasks
 
-- [ ] 1. Set up project structure and testing infrastructure
+- [x] 1. Set up project structure and testing infrastructure
   - Create main application file: `expense_tracker.py`
   - Create test directory structure: `tests/`
   - Set up `requirements.txt` with Hypothesis and pytest dependencies

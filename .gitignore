@@ -132,11 +132,3 @@ Thumbs.db
 # Project specific
 *.bak
 *.tmp
-
-# Kiro/SEMS configuration files
-.config.kiro
-*.config.kiro
-.SEMS/
-
-#logs
-.SEMS/

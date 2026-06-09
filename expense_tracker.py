@@ -104,6 +104,86 @@ def validate_category(category_str):
     return normalized
 
 
+def add_expense(date, amount, category):
+    """
+    Add a new expense to the expense list.
+    
+    Args:
+        date: Validated date string in YYYY-MM-DD format
+        amount: Validated amount as float
+        category: Validated category string (normalized to lowercase)
+    """
+    expense = {
+        'date': date,
+        'amount': amount,
+        'category': category
+    }
+    expense_list.append(expense)
+    
+    # Display confirmation message
+    print(f"Expense added: {date}, ${amount:.2f}, {category}")
+
+
+def view_expenses():
+    """
+    Display all expenses in tabular format, sorted by date (oldest first).
+    Shows 'No expenses recorded' message if list is empty.
+    """
+    if not expense_list:
+        print("No expenses recorded")
+        return
+    
+    # Sort expenses by date (oldest first)
+    sorted_expenses = sorted(expense_list, key=lambda x: x['date'])
+    
+    # Display header
+    print("\nAll Expenses:")
+    print(f"{'Date':<12} | {'Amount':>10} | {'Category':<10}")
+    print("-" * 12 + "-+-" + "-" * 10 + "-+-" + "-" * 10)
+    
+    # Display each expense
+    for expense in sorted_expenses:
+        print(f"{expense['date']:<12} | "
+              f"{expense['amount']:>10.2f} | "
+              f"{expense['category']:<10}")
+    
+    # Call budget warning stub
+    display_budget_warning()
+
+
+def calculate_total():
+    """
+    Calculate the sum of all expense amounts.
+    
+    Returns:
+        float: Total spending with 2 decimal precision, 0.00 if list is empty
+    """
+    if not expense_list:
+        return 0.00
+    
+    total = sum(expense['amount'] for expense in expense_list)
+    return round(total, 2)
+
+
+def view_total_spending():
+    """
+    Display the total spending amount with 2 decimal places.
+    """
+    total = calculate_total()
+    print(f"\nTotal Spending: ${total:.2f}")
+    
+    # Call budget warning stub
+    display_budget_warning()
+
+
+def display_budget_warning():
+    """
+    Stub function for displaying budget warnings.
+    Will be implemented in Task 7.
+    """
+    pass
+
+
 def main():
     """Main entry point for the application."""
     print("Student Expense Tracker")

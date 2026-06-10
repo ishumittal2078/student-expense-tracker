@@ -176,6 +176,60 @@ def view_total_spending():
     display_budget_warning()
 
 
+def calculate_category_totals():
+    """
+    Calculate total spending for each category.
+    
+    Returns:
+        dict: Dictionary mapping category to total amount, empty dict if no expenses
+    """
+    if not expense_list:
+        return {}
+    
+    totals = {}
+    for expense in expense_list:
+        cat = expense['category']
+        if cat in totals:
+            totals[cat] += expense['amount']
+        else:
+            totals[cat] = expense['amount']
+    
+    return totals
+
+
+def find_highest_category():
+    """
+    Identify the category with the highest total spending.
+    
+    Returns:
+        tuple: (category, amount) for highest spending category, or None if no expenses
+    """
+    category_totals = calculate_category_totals()
+    
+    if not category_totals:
+        return None
+    
+    # Find category with maximum total
+    highest_cat = max(category_totals.items(), key=lambda x: x[1])
+    return highest_cat
+
+
+def view_highest_category():
+    """
+    Display the highest spending category and its total amount.
+    Shows 'No data available' message if list is empty.
+    """
+    result = find_highest_category()
+    
+    if result is None:
+        print("No data available")
+        return
+    
+    category, amount = result
+    print(f"\nHighest Spending Category: {category}")
+    print(f"Amount: ${amount:.2f}")
+
+
 def display_budget_warning():
     """
     Stub function for displaying budget warnings.

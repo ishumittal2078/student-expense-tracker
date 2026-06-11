@@ -230,12 +230,76 @@ def view_highest_category():
     print(f"Amount: ${amount:.2f}")
 
 
+def set_monthly_budget(budget_str):
+    """
+    Validate and store monthly budget.
+    
+    Args:
+        budget_str: String to validate as a budget amount
+        
+    Raises:
+        ValueError: If budget is invalid with specific error message
+    """
+    global monthly_budget
+    
+    try:
+        budget = float(budget_str)
+    except ValueError:
+        raise ValueError(
+            f"Invalid budget. You entered: '{budget_str}'\n"
+            f"Budget must be between 0.01 and 999,999,999.99 with at most 2 decimal places."
+        )
+    
+    # Check range
+    if budget < 0.01 or budget > 999_999_999.99:
+        raise ValueError(
+            f"Invalid budget. You entered: '{budget_str}'\n"
+            f"Budget must be between 0.01 and 999,999,999.99 with at most 2 decimal places."
+        )
+    
+    # Check decimal places using string manipulation
+    if '.' in budget_str:
+        decimal_part = budget_str.split('.')[1]
+        if len(decimal_part) > 2:
+            raise ValueError(
+                f"Invalid budget. You entered: '{budget_str}'\n"
+                f"Budget must be between 0.01 and 999,999,999.99 with at most 2 decimal places."
+            )
+    
+    monthly_budget = budget
+    print(f"Monthly budget set to: ${budget:.2f}")
+
+
+def check_budget_warning():
+    """
+    Check if current month spending meets or exceeds the monthly budget.
+    
+    Returns:
+        bool: True if spending >= budget for current month, False otherwise
+              Returns False if budget is not set
+    """
+    if monthly_budget is None:
+        return False
+    
+    # Get current month in YYYY-MM format
+    current_month = datetime.now().strftime('%Y-%m')
+    
+    # Filter expenses from current month and calculate total
+    month_total = sum(
+        exp['amount']
+        for exp in expense_list
+        if exp['date'].startswith(current_month)
+    )
+    
+    return month_total >= monthly_budget
+
+
 def display_budget_warning():
     """
-    Stub function for displaying budget warnings.
-    Will be implemented in Task 7.
+    Display budget warning message if current month spending meets or exceeds budget.
     """
-    pass
+    if check_budget_warning():
+        print(f"\n⚠️  WARNING: You have exceeded your monthly budget of ${monthly_budget:.2f}!")
 
 
 def main():

@@ -1,4 +1,11 @@
 # Testing dependencies for Student Expense Tracker
+# Install with: pip install -r requirements.txt
+
+# Property-based testing
 hypothesis>=6.0.0
+
+# Test framework
 pytest>=7.0.0
+
+# Coverage reporting
 pytest-cov>=4.0.0

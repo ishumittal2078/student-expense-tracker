@@ -302,12 +302,155 @@ def display_budget_warning():
         print(f"\n⚠️  WARNING: You have exceeded your monthly budget of ${monthly_budget:.2f}!")
 
 
+def initialize_sample_data():
+    """
+    Add 3 sample expenses covering at least 3 categories.
+    """
+    sample_expenses = [
+        {'date': '2024-01-10', 'amount': 150.00, 'category': 'food'},
+        {'date': '2024-01-12', 'amount': 80.50, 'category': 'travel'},
+        {'date': '2024-01-15', 'amount': 299.00, 'category': 'recharge'}
+    ]
+    
+    for expense in sample_expenses:
+        expense_list.append(expense)
+
+
+def display_menu():
+    """
+    Display the main menu with 6 options and visual separator.
+    """
+    print("\n" + "=" * 40)
+    print("STUDENT EXPENSE TRACKER")
+    print("=" * 40)
+    print("1. Add Expense")
+    print("2. View All Expenses")
+    print("3. View Total Spending")
+    print("4. View Highest Spending Category")
+    print("5. Set Monthly Budget")
+    print("6. Exit")
+    print("=" * 40)
+
+
+def get_menu_choice():
+    """
+    Read and validate menu input (integers 1-6).
+    Re-prompts until valid choice is received.
+    
+    Returns:
+        int: Valid menu choice between 1 and 6
+    """
+    while True:
+        choice = input("Enter your choice (1-6): ").strip()
+        
+        try:
+            choice_num = int(choice)
+            if 1 <= choice_num <= 6:
+                return choice_num
+            else:
+                print(f"Error: Invalid choice. You entered: '{choice}'")
+                print("Please enter a number between 1 and 6.")
+        except ValueError:
+            print(f"Error: Invalid choice. You entered: '{choice}'")
+            print("Please enter a number between 1 and 6.")
+
+
+def prompt_add_expense():
+    """
+    Prompt for date, amount, and category inputs.
+    Validate all fields and only add expense if all validations pass.
+    Display specific error messages for invalid inputs.
+    """
+    print("\n--- Add New Expense ---")
+    
+    # Prompt for date
+    date_str = input("Enter expense date (YYYY-MM-DD): ").strip()
+    try:
+        validate_date(date_str)
+    except ValueError as e:
+        print(f"Error: {e}")
+        return
+    
+    # Prompt for amount
+    amount_str = input("Enter amount (0.01 to 1,000,000.00): ").strip()
+    try:
+        amount = validate_amount(amount_str)
+    except ValueError as e:
+        print(f"Error: {e}")
+        return
+    
+    # Prompt for category
+    category_str = input("Enter category (food/travel/recharge/other): ").strip()
+    try:
+        category = validate_category(category_str)
+    except ValueError as e:
+        print(f"Error: {e}")
+        return
+    
+    # All validations passed - add the expense
+    add_expense(date_str, amount, category)
+
+
+def prompt_set_budget():
+    """
+    Prompt for budget amount with range hint.
+    Call set_monthly_budget() or display error.
+    """
+    print("\n--- Set Monthly Budget ---")
+    budget_str = input("Enter monthly budget (0.01 to 999,999,999.99): ").strip()
+    
+    try:
+        set_monthly_budget(budget_str)
+    except ValueError as e:
+        print(f"Error: {e}")
+
+
+def main_loop():
+    """
+    Main application loop: initialize sample data, display menu,
+    get choice, execute action, and loop until exit.
+    """
+    # Initialize sample data at start
+    initialize_sample_data()
+    
+    print("\nWelcome to Student Expense Tracker!")
+    print("Sample data has been loaded.")
+    
+    while True:
+        try:
+            # Display menu and get choice
+            display_menu()
+            choice = get_menu_choice()
+            
+            # Execute action based on choice
+            if choice == 1:
+                prompt_add_expense()
+            elif choice == 2:
+                view_expenses()
+            elif choice == 3:
+                view_total_spending()
+            elif choice == 4:
+                view_highest_category()
+            elif choice == 5:
+                prompt_set_budget()
+            elif choice == 6:
+                print("\nThank you for using Student Expense Tracker!")
+                print("Goodbye!")
+                break
+            
+            # Display separator after each action
+            print("\n" + "-" * 40)
+            
+        except Exception as e:
+            # Error recovery: display user-friendly message and return to menu
+            print(f"\nAn unexpected error occurred: {e}")
+            print("Returning to main menu...")
+            print("-" * 40)
+
+
 def main():
     """Main entry point for the application."""
-    print("Student Expense Tracker")
-    print("=" * 40)
-    print("Application structure initialized.")
-    print("Ready for implementation.")
+    main_loop()
 
 
 if __name__ == "__main__":

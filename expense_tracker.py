@@ -18,7 +18,8 @@ VALID_CATEGORIES = {'food', 'travel', 'recharge', 'other'}
 
 def validate_date(date_str):
     """
-    Validate date string is in YYYY-MM-DD format and represents a valid calendar date.
+    Validate date string is in YYYY-MM-DD format and represents a valid
+    calendar date.
 
     Args:
         date_str: String to validate as a date
@@ -41,8 +42,8 @@ def validate_date(date_str):
 
 def validate_amount(amount_str):
     """
-    Validate amount is numeric, in range [0.01, 1000000.00], and has max 2 decimal
-    places.
+    Validate amount is numeric, in range [0.01, 1000000.00], and has max
+    2 decimal places.
 
     Args:
         amount_str: String to validate as an amount
@@ -58,7 +59,8 @@ def validate_amount(amount_str):
     if stripped.lower() in ('nan', 'inf', 'infinity', 'none', 'null', ''):
         raise ValueError(
             f"Invalid amount. You entered: '{amount_str}'\n"
-            f"Amount must be between 0.01 and 1,000,000.00 with at most 2 decimal places."
+            "Amount must be between 0.01 and 1,000,000.00 with at most 2 "
+            "decimal places."
         )
 
     try:
@@ -66,27 +68,31 @@ def validate_amount(amount_str):
     except ValueError:
         raise ValueError(
             f"Invalid amount. You entered: '{amount_str}'\n"
-            f"Amount must be between 0.01 and 1,000,000.00 with at most 2 decimal places."
+            "Amount must be between 0.01 and 1,000,000.00 with at most 2 "
+            "decimal places."
         )
 
     # Check for special float values
     if not (amount == amount):  # NaN check
         raise ValueError(
             f"Invalid amount. You entered: '{amount_str}'\n"
-            f"Amount must be between 0.01 and 1,000,000.00 with at most 2 decimal places."
+            "Amount must be between 0.01 and 1,000,000.00 with at most 2 "
+            "decimal places."
         )
 
     if amount == float('inf') or amount == float('-inf'):
         raise ValueError(
             f"Invalid amount. You entered: '{amount_str}'\n"
-            f"Amount must be between 0.01 and 1,000,000.00 with at most 2 decimal places."
+            "Amount must be between 0.01 and 1,000,000.00 with at most 2 "
+            "decimal places."
         )
 
     # Check range
     if amount < 0.01 or amount > 1_000_000.00:
         raise ValueError(
             f"Invalid amount. You entered: '{amount_str}'\n"
-            f"Amount must be between 0.01 and 1,000,000.00 with at most 2 decimal places."
+            "Amount must be between 0.01 and 1,000,000.00 with at most 2 "
+            "decimal places."
         )
 
     # Check decimal places using string manipulation
@@ -95,7 +101,8 @@ def validate_amount(amount_str):
         if len(decimal_part) > 2:
             raise ValueError(
                 f"Invalid amount. You entered: '{amount_str}'\n"
-                f"Amount must be between 0.01 and 1,000,000.00 with at most 2 decimal places."
+                "Amount must be between 0.01 and 1,000,000.00 with at most 2 "
+                "decimal places."
             )
 
     return amount
@@ -203,7 +210,8 @@ def calculate_category_totals():
     Calculate total spending for each category.
 
     Returns:
-        dict: Dictionary mapping category to total amount, empty dict if no expenses
+        dict: Dictionary mapping category to total amount, empty dict if no
+        expenses
     """
     if not expense_list:
         return {}
@@ -224,7 +232,8 @@ def find_highest_category():
     Identify the category with the highest total spending.
 
     Returns:
-        tuple: (category, amount) for highest spending category, or None if no expenses
+        tuple: (category, amount) for highest spending category, or None if
+        no expenses
     """
     category_totals = calculate_category_totals()
 
@@ -260,7 +269,8 @@ def set_monthly_budget(budget_str):
         budget_str: String to validate as a budget amount
 
     Raises:
-        ValueError: If budget is invalid with specific error message
+        ValueError: If budget is invalid with specific error message. The
+        error message includes the invalid value and valid range.
     """
     global monthly_budget
 
@@ -269,7 +279,8 @@ def set_monthly_budget(budget_str):
     if stripped.lower() in ('nan', 'inf', 'infinity', 'none', 'null', ''):
         raise ValueError(
             f"Invalid budget. You entered: '{budget_str}'\n"
-            f"Budget must be between 0.01 and 999,999,999.99 with at most 2 decimal places."
+            "Budget must be between 0.01 and 999,999,999.99 with at most 2 "
+            "decimal places."
         )
 
     try:
@@ -277,27 +288,31 @@ def set_monthly_budget(budget_str):
     except ValueError:
         raise ValueError(
             f"Invalid budget. You entered: '{budget_str}'\n"
-            f"Budget must be between 0.01 and 999,999,999.99 with at most 2 decimal places."
+            "Budget must be between 0.01 and 999,999,999.99 with at most 2 "
+            "decimal places."
         )
 
     # Check for special float values
     if not (budget == budget):  # NaN check
         raise ValueError(
             f"Invalid budget. You entered: '{budget_str}'\n"
-            f"Budget must be between 0.01 and 999,999,999.99 with at most 2 decimal places."
+            "Budget must be between 0.01 and 999,999,999.99 with at most 2 "
+            "decimal places."
         )
 
     if budget == float('inf') or budget == float('-inf'):
         raise ValueError(
             f"Invalid budget. You entered: '{budget_str}'\n"
-            f"Budget must be between 0.01 and 999,999,999.99 with at most 2 decimal places."
+            "Budget must be between 0.01 and 999,999,999.99 with at most 2 "
+            "decimal places."
         )
 
     # Check range
     if budget < 0.01 or budget > 999_999_999.99:
         raise ValueError(
             f"Invalid budget. You entered: '{budget_str}'\n"
-            f"Budget must be between 0.01 and 999,999,999.99 with at most 2 decimal places."
+            "Budget must be between 0.01 and 999,999,999.99 with at most 2 "
+            "decimal places."
         )
 
     # Check decimal places using string manipulation
@@ -306,11 +321,13 @@ def set_monthly_budget(budget_str):
         if len(decimal_part) > 2:
             raise ValueError(
                 f"Invalid budget. You entered: '{budget_str}'\n"
-                f"Budget must be between 0.01 and 999,999,999.99 with at most 2 decimal places."
+                "Budget must be between 0.01 and 999,999,999.99 with at most "
+                "2 decimal places."
             )
 
     monthly_budget = budget
-    print(f"Monthly budget set to: ${budget:.2f}")
+    msg = f"Monthly budget set to: ${budget:.2f}"
+    print(msg)
 
 
 def check_budget_warning():
@@ -339,7 +356,8 @@ def check_budget_warning():
 
 def display_budget_warning():
     """
-    Display budget warning message if current month spending meets or exceeds budget.
+    Display budget warning message if current month spending meets or exceeds
+    budget.
     """
     if check_budget_warning():
         print(
